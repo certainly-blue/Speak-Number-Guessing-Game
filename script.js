@@ -6,7 +6,7 @@ function getRandomNumber() {
 }
 
 const randomNum = getRandomNumber();
-console.log('Number:', randomNum);
+console.log(randomNum);
 
 window.SpeechRecognition =
   window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -15,11 +15,16 @@ let recognition = new window.SpeechRecognition();
 
 // Start recognition and game
 recognition.start();
+//let msg = "";
 
 // Capture user speak
 function onSpeak(event) {
-  const msg = event.results[0][0].transcript;  // You can log the event to view the structure of the data
-  console.log(msg);
+  console.log(event);
+  msg = event.results[0][0].transcript; 
+  //console.log(msg);
+  writeMessage(msg);
+  checkNumber(msg);
+  
 }
 
 // Speak result
@@ -35,6 +40,9 @@ function writeMessage(msg) {
 
   msgEl.append(div, span);
 }
+
+//console.log(writeMessage);
+//writeMessage(msg);
 
 
 // Check msg against the secret number
@@ -72,10 +80,12 @@ function checkNumber(msg) {
     button.addEventListener('click', () => window.location.reload());
 
     msgEl.append(h2, button);
+
   } else if (num > randomNum) {
     const div = document.createElement('div');
     div.textContent = 'GO LOWER';
     msgEl.append(div);
+
   } else {
     // if (num < randomNum)
     const div = document.createElement('div');
@@ -83,6 +93,7 @@ function checkNumber(msg) {
     msgEl.append(div);
   }
 }
+
 
   const wordToNumber = {
     one: 1,
@@ -110,3 +121,5 @@ function checkNumber(msg) {
   const num = Number(msg);
   // Check if the spoken content is a valid number
   // ... remaining code below this line is unchanged
+
+  
